@@ -8,7 +8,6 @@ type Props = {
 };
 
 const FileUpload = ({ onDataLoaded }: Props) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const processRows = (rows: any[]) => {
     const cleaned = rows
       .filter((row) => row.EmpID !== undefined || row[0] !== undefined)
