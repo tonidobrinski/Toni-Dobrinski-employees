@@ -109,12 +109,16 @@ const FileUpload = ({ onDataLoaded }: Props) => {
         />
       </label>
 
-      {fileName !== "No file selected" && (
+      {(fileName !== "No file selected" && (
         <div className="file-tag">
           <span className="file-tag-name">{fileName}</span>
           <button className="file-tag-remove" onClick={handleRemoveFile}>
             ×
           </button>
+        </div>
+      )) || (
+        <div className="file-tag">
+          <span className="file-tag-name">{fileName}</span>
         </div>
       )}
     </div>
