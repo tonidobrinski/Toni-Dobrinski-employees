@@ -65,7 +65,7 @@ git clone https://github.com/tonidobrinski/Toni-Dobrinski-employees.git
 Navigate into the project:
 
 ```bash
-cd FirstName-LastName-employees
+cd Toni-Dobrinski-employees
 ```
 
 Install dependencies:
