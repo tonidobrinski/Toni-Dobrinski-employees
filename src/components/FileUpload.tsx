@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Papa from "papaparse";
 import * as XLSX from "xlsx";
 import { parseDate } from "../utils/dateUtils";
@@ -11,6 +11,7 @@ type Props = {
 
 const FileUpload = ({ onDataLoaded }: Props) => {
   const [fileName, setFileName] = useState<string>("No file selected");
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const processRows = (rows: any[]) => {
     const cleaned = rows
@@ -77,6 +78,15 @@ const FileUpload = ({ onDataLoaded }: Props) => {
     }
   };
 
+  const handleRemoveFile = () => {
+    setFileName("No file selected");
+    onDataLoaded([]);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   return (
     <div className="custom-file-upload">
       <label className="upload-button btn-grad">
@@ -88,7 +98,9 @@ const FileUpload = ({ onDataLoaded }: Props) => {
           />
           <p>Upload File</p>
         </div>
+
         <input
+          ref={fileInputRef}
           className="file-input"
           type="file"
           accept=".csv,.xlsx,.xls,.xlsm"
@@ -97,7 +109,14 @@ const FileUpload = ({ onDataLoaded }: Props) => {
         />
       </label>
 
-      <span className="file-name">{fileName}</span>
+      {fileName !== "No file selected" && (
+        <div className="file-tag">
+          <span className="file-tag-name">{fileName}</span>
+          <button className="file-tag-remove" onClick={handleRemoveFile}>
+            ×
+          </button>
+        </div>
+      )}
     </div>
   );
 };

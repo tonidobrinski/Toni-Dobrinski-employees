@@ -50,3 +50,49 @@
   align-items: center;
   gap: 10px;
 }
+
+.file-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f1f3f5;
+  padding: 6px 12px;
+  border-radius: 20px;
+  width: fit-content;
+  border: 1px solid #e0e0e0;
+}
+
+.file-tag-name {
+  font-size: 14px;
+  color: #333;
+  max-width: 220px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.file-tag-remove {
+  background-color: #f2f2f2;
+  color: #555;
+  border: 1px solid #e0e0e0;
+
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+
+  padding: 2px 6px;
+  border-radius: 12px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.file-tag-remove:hover {
+  background-color: #e6e6e6;
+  color: #222;
+}
