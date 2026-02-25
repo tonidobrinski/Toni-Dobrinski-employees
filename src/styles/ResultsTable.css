@@ -1,0 +1,10 @@
+.data-grid-wrapper {
+  height: 400px;
+  width: 100%;
+  background-color: #fafafa;
+  border-radius: 6px;
+}
+
+.results-section {
+  margin-top: 20px;
+}

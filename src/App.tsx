@@ -3,6 +3,7 @@ import FileUpload from "./components/FileUpload";
 import ResultsTable from "./components/ResultsTable";
 import type { EmployeeRecord, ProjectOverlap } from "./types";
 import { calculateLongestPair } from "./utils/calculateLongestPair";
+import "./App.css";
 
 function App() {
   const [results, setResults] = useState<ProjectOverlap[]>([]);
@@ -15,8 +16,8 @@ function App() {
   };
 
   return (
-    <div style={{ padding: 40 }}>
-      <h1>Employees Longest Working Pair</h1>
+    <div className="app-container">
+      <h1 className="app-title">Employees Longest Working Pair</h1>
       <FileUpload onDataLoaded={handleData} />
       <ResultsTable data={results} />
     </div>

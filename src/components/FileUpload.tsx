@@ -1,18 +1,21 @@
+import { useState } from "react";
 import Papa from "papaparse";
 import * as XLSX from "xlsx";
 import { parseDate } from "../utils/dateUtils";
 import type { EmployeeRecord } from "../types";
+import "../styles/FileUpload.css";
 
 type Props = {
   onDataLoaded: (data: EmployeeRecord[]) => void;
 };
 
 const FileUpload = ({ onDataLoaded }: Props) => {
+  const [fileName, setFileName] = useState<string>("No file selected");
+
   const processRows = (rows: any[]) => {
     const cleaned = rows
       .filter((row) => row.EmpID !== undefined || row[0] !== undefined)
-      .map((row) => {
-        // Support both header-based and index-based parsing
+      .map((row: any) => {
         const empId = row.EmpID ?? row[0];
         const projectId = row.ProjectID ?? row[1];
         const dateFrom = row.DateFrom ?? row[2];
@@ -25,13 +28,7 @@ const FileUpload = ({ onDataLoaded }: Props) => {
           dateTo: parseDate(dateTo),
         };
       })
-      .filter(
-        (r) =>
-          !isNaN(r.empId) &&
-          !isNaN(r.projectId) &&
-          r.dateFrom instanceof Date &&
-          r.dateTo instanceof Date,
-      );
+      .filter((r) => !isNaN(r.empId) && !isNaN(r.projectId));
 
     onDataLoaded(cleaned);
   };
@@ -39,6 +36,8 @@ const FileUpload = ({ onDataLoaded }: Props) => {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    setFileName(file.name);
 
     const fileType = file.name.split(".").pop()?.toLowerCase();
 
@@ -66,6 +65,7 @@ const FileUpload = ({ onDataLoaded }: Props) => {
 
         const jsonData = XLSX.utils.sheet_to_json(worksheet, {
           defval: "",
+          raw: true,
         });
 
         processRows(jsonData);
@@ -78,7 +78,27 @@ const FileUpload = ({ onDataLoaded }: Props) => {
   };
 
   return (
-    <input type="file" accept=".csv,.xlsx,.xls,.xlsm" onChange={handleFile} />
+    <div className="custom-file-upload">
+      <label className="upload-button btn-grad">
+        <div className="inner-wrapper">
+          <img
+            src="/uploadIcon.webp"
+            alt="Upload Icon"
+            className="icon-upload"
+          />
+          <p>Upload File</p>
+        </div>
+        <input
+          className="file-input"
+          type="file"
+          accept=".csv,.xlsx,.xls,.xlsm"
+          onChange={handleFile}
+          hidden
+        />
+      </label>
+
+      <span className="file-name">{fileName}</span>
+    </div>
   );
 };
 

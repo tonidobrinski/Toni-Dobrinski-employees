@@ -1,5 +1,6 @@
 import { DataGrid } from "@mui/x-data-grid";
 import type { ProjectOverlap } from "../types";
+import "../styles/ResultsTable.css";
 
 type Props = {
   data: ProjectOverlap[];
@@ -14,8 +15,9 @@ const ResultsTable = ({ data }: Props) => {
   ];
 
   return (
-    <div style={{ height: 400 }}>
+    <div className="data-grid-wrapper">
       <DataGrid
+        className="results-section"
         getRowId={(row) => `${row.emp1}-${row.emp2}-${row.projectId}`}
         rows={data}
         columns={columns}
